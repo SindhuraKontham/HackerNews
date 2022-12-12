@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div>
-      <NewsList data={state}/>
+      <NewsList newsItems={state} />
     </div>
   );
 }
