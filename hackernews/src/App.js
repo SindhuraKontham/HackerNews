@@ -3,6 +3,7 @@ import './App.css';
 import hackernews from './hackernews.json'
 import { useState, useEffect } from 'react';
 import NewsList from './Components/NewsList';
+import axios from 'axios';
 
 function App() {
   const [state, setState] = useState([
@@ -29,18 +30,35 @@ function App() {
     }
   ]);
 
-  useEffect(() => {
+  const loadStateFromResponse = (response) => {
     setState(
-      hackernews.hits.map((arrayHits) => {
+      response.hits.map((arrayHits) => {
+        console.log(arrayHits.title);
         return {
           created_at: new Date(arrayHits.created_at),
-          title: arrayHits.title,
+          title: arrayHits.title ?? arrayHits.storyTitle,
           url: arrayHits.url,
           author: arrayHits.author,
           type: "news",
         };
       })
     );
+  }
+
+  const searchFor = ( query ) => {
+    // fetches data from HackerNews
+    axios.get(`http://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(query)}&numericFilters=num_comments%3E%3D0`)
+      .then(response => {
+        if (response.status === 200) {
+          // load state from response.data
+          console.log(response.data)
+          loadStateFromResponse(response.data)
+        }
+      }).catch((e) => console.log(e))
+  }
+
+  useEffect(() => {
+    searchFor("react and javascript");
   }, [])
 
   return (
