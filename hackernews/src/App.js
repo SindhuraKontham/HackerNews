@@ -4,6 +4,7 @@ import hackernews from './hackernews.json'
 import { useState, useEffect } from 'react';
 import NewsList from './Components/NewsList';
 import axios from 'axios';
+import Navbar from './Components/Navbar';
 
 function App() {
   const [state, setState] = useState([
@@ -63,6 +64,7 @@ function App() {
 
   return (
     <div>
+      <Navbar searchFor={searchFor}/>
       <NewsList newsItems={state} />
     </div>
   );
