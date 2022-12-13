@@ -46,25 +46,26 @@ function App() {
     );
   }
 
-  const searchFor = ( query ) => {
-    // fetches data from HackerNews
-    axios.get(`http://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(query)}&numericFilters=num_comments%3E%3D0`)
-      .then(response => {
-        if (response.status === 200) {
-          // load state from response.data
-          console.log(response.data)
-          loadStateFromResponse(response.data)
-        }
-      }).catch((e) => console.log(e))
-  }
+  const searchFor = ( query ) => () => {
+      // fetches data from HackerNews
+      axios.get(`http://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(query)}&numericFilters=num_comments%3E%3D0`)
+        .then(response => {
+          if (response.status === 200) {
+            // load state from response.data
+            console.log(response.data)
+            loadStateFromResponse(response.data)
+          }
+        }).catch((e) => console.log(e))
+      }
+
 
   useEffect(() => {
-    searchFor("react and javascript");
+    searchFor("react and javascript")();
   }, [])
 
   return (
     <div>
-      <Navbar searchFor={searchFor}/>
+    <Navbar searchFor={searchFor}/>
       <NewsList newsItems={state} />
     </div>
   );
