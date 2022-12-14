@@ -64,7 +64,7 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div className='container'>
     <Navbar searchFor={searchFor}/>
       <NewsList newsItems={state} />
     </div>

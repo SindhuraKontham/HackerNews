@@ -4,11 +4,11 @@ import NewsItem from './NewsItem'
 export default function NewsList({ newsItems }) {
   return (
     <div>
-      <ul>
+      <ol>
         {newsItems.map((newsItem) => {
           return <NewsItem newsItem={newsItem} />;
         })}
-      </ul>
+      </ol>
       <button>Back</button>
       <button>Forward</button>
     </div>
